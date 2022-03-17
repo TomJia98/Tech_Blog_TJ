@@ -1,0 +1,29 @@
+{
+  "name": "tech_blog_tj",
+  "version": "1.0.0",
+  "description": "Tech blog for UWA coding bootcamp",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TomJia98/Tech_Blog_TJ.git"
+  },
+  "author": "Tom Jia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TomJia98/Tech_Blog_TJ/issues"
+  },
+  "homepage": "https://github.com/TomJia98/Tech_Blog_TJ#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "connect-session-sequelize": "^7.1.2",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-handlebars": "^6.0.3",
+    "express-session": "^1.17.2",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.17.0"
+  }
+}
