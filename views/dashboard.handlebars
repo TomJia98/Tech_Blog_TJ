@@ -1,0 +1,38 @@
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="home">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="dashboard">Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="login">Login</a>
+              </li>
+                </li>
+              <li class="nav-item">
+                <a class="nav-link" href="logout">Logout</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+{{!-- add ability to update and delete posts --}}
+
+<div>the dashboard logged in</div>
+
+{{#each userPosts}}
+<div class="posts">
+<h3>{{title}}</h3>
+<p>uploaded on {{date_created}}</p>
+</div>
+{{/each}}
+
+
+<a href="newpost"> create post </a>
+
+
+<script src="/js/script.js"></script>
