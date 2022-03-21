@@ -19,14 +19,10 @@
         </div>
       </nav>
 
-
-<form action="/newpost" method="POST">
-  <label for="title">Title</label>
-  <input type="text" id="title" name="title"><br><br>
-  <label for="description">description</label>
-  <textarea type="text" id="description" name="description"></textarea>
-  <input type="submit" value="submit">
-</form>
-
-{{{message}}}
-
+      <div>
+<h3>{{title}}</h3>
+<p>uploaded by {{name}} on {{date_created}}</p>
+<div>
+<p>{{description}}</p>
+</div>
+</div>

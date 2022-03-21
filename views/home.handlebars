@@ -20,24 +20,24 @@
         </div>
       </nav>
 
-<p class="a">test</p>
 
 {{#if isLogged}}
 <div>the home logged in</div>
 {{/if}}
 
 {{#each userPosts}}
-<div class="posts">
+<div class="posts" data-id="{{id}}">
 <h3>{{title}}</h3>
 <p>uploaded by {{'user.name'}} on {{date_created}}</p>
 <div>
 <p>{{description}}</p>
 </div>
+
+<a href="comment{{id}}">view post</a>
+
 </div>
 {{/each}}
 
 
 
-{{#if isLogged}}
-<script src="/js/comment.js"></script>
-{{/if}}
+<p>asd</p>

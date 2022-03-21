@@ -1,6 +1,11 @@
-var posts = document.getElementsByClassName("posts");
-const aa = document.querySelectorAll(".a");
-console.log(aa);
-aa.addEventListener("click", function (event) {
-  console.log(event);
-});
+// var posts = document.querySelectorAll(".posts");
+// console.log(posts);
+// posts.forEach((element) => {
+//   element.addEventListener("click", async function (event) {
+//     const data = element.dataset.id;
+//     const postReq = await fetch(`./comment:${data}`, {
+//       method: "post",
+//     });
+//     postReq;
+//   });
+// });

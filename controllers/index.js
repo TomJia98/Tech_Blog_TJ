@@ -1,9 +1,9 @@
 const router = require("express").Router();
-const { raw } = require("body-parser");
-const e = require("express");
+const bodyParser = require("body-parser");
+const app = require("express");
 const { currentDate } = require("../utils/helpers");
 const session = require("express-session");
-const { User, Post } = require("../models");
+const { User, Post, Comment } = require("../models");
 
 router.get("/", (req, res) => {
   res.render("main");
@@ -21,7 +21,7 @@ router.get("/home", async (req, res) => {
     ],
     raw: true,
   });
-  console.log(userPosts);
+
   res.render("home", { userPosts, isLogged });
 });
 
@@ -33,6 +33,53 @@ router.get("/signup", async (req, res) => {
   res.render("signup");
 });
 
+router.get("/comment:id", async (req, res) => {
+  if (req.session.logged_in) {
+    let data = req.params.id;
+    const userData = await User.findOne({
+      where: { id: req.session.userId },
+      raw: true,
+    });
+    const selectedPost = await Post.findAll({
+      include: [
+        {
+          model: Comment,
+        },
+        {
+          model: User,
+        },
+      ],
+      where: {
+        id: data,
+      },
+      raw: true,
+    });
+    const firstRes = selectedPost[1];
+    const asd = firstRes["comments.post_id"];
+    const comments = await Comment.findAll({
+      include: [{ Model: User }],
+      where: {
+        post_id: asd,
+      },
+      raw: true,
+    });
+    console.log(comments);
+    res.render("add-comment", { userData, post: firstRes, selectedPost });
+  } else {
+    res.render("login");
+  }
+});
+
+router.post("/newcomment:id", async (req, res) => {
+  const newComment = await Comment.create({
+    post_id: req.params.id,
+    description: req.body.comment,
+    user_id: req.session.userId,
+  });
+  newComment;
+  res.redirect(`/comment${req.params.id}`);
+});
+
 router.get("/dashboard", async (req, res) => {
   if (req.session.logged_in) {
     const userPosts = await Post.findAll({
@@ -40,7 +87,7 @@ router.get("/dashboard", async (req, res) => {
       raw: true,
     });
     console.log(userPosts);
-    res.render("dashboardLoggedin", { userPosts });
+    res.render("dashboard", { userPosts });
   } else {
     res.render("login");
   }
@@ -60,7 +107,12 @@ router.post("/login", async (req, res) => {
       req.session.user = req.body.username;
       req.session.userId = checkPW.id;
 
-      res.render("dashboard");
+      const userPosts = await Post.findAll({
+        where: { user_id: req.session.userId },
+        raw: true,
+      });
+
+      res.render("dashboard", { userPosts });
     } else {
       res.render("login", { message: "Invalid username or password" });
     }
@@ -102,6 +154,9 @@ router.post("/signup", async (req, res) => {
     password: req.body.password,
   });
   newUser;
+  req.session.logged_in = true;
+  req.session.user = req.body.username;
+  req.session.userId = checkPW.id;
   res.render("dashboard");
 });
 
