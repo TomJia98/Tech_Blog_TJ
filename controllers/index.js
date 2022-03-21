@@ -36,17 +36,14 @@ router.get("/signup", async (req, res) => {
 router.get("/comment:id", async (req, res) => {
   if (req.session.logged_in) {
     let data = req.params.id;
-    const userData = await User.findOne({
-      where: { id: req.session.userId },
-      raw: true,
-    });
+
     const selectedPost = await Post.findAll({
       include: [
         {
           model: Comment,
-        },
-        {
-          model: User,
+          include: {
+            model: User,
+          },
         },
       ],
       where: {
@@ -54,17 +51,19 @@ router.get("/comment:id", async (req, res) => {
       },
       raw: true,
     });
-    const firstRes = selectedPost[1];
-    const asd = firstRes["comments.post_id"];
-    const comments = await Comment.findAll({
-      include: [{ Model: User }],
-      where: {
-        post_id: asd,
-      },
+    const firstRes = selectedPost[0];
+
+    const postId = firstRes["user_id"];
+    const userData = await User.findOne({
+      where: { id: postId },
       raw: true,
     });
-    console.log(comments);
-    res.render("add-comment", { userData, post: firstRes, selectedPost });
+    console.log(firstRes);
+    res.render("add-comment", {
+      userData,
+      post: firstRes,
+      selectedPost,
+    });
   } else {
     res.render("login");
   }
@@ -142,7 +141,7 @@ router.post("/newpost", async (req, res) => {
 router.get("/logout", async (req, res) => {
   if (req.session.logged_in) {
     req.session.destroy();
-    res.render("home");
+    res.redirect("/home");
   } else {
     res.status(404).end();
   }
