@@ -79,6 +79,43 @@ router.post("/newcomment:id", async (req, res) => {
   res.redirect(`/comment${req.params.id}`);
 });
 
+router.get("/deletepost:id", async (req, res) => {
+  if (req.session.logged_in) {
+    //delete post, saves a js file being made
+    const deletePost = await Post.destroy({
+      where: { id: req.params.id },
+    });
+    deletePost;
+    res.redirect("/dashboard");
+  } else res.render("login");
+});
+
+router.post("/updatepost:id", async (req, res) => {
+  if (req.session.logged_in) {
+    const updatePost = await Post.update(
+      { title: req.body.title, description: req.body.description },
+      { where: { id: req.params.id } }
+    );
+    updatePost;
+    res.redirect("/dashboard");
+  } else {
+    res.redirect("/login");
+  }
+});
+
+router.get("/updatepost:id", async (req, res) => {
+  if (req.session.logged_in) {
+    const selectedPost = await Post.findOne({
+      where: { id: req.params.id },
+      raw: true,
+    });
+    console.log(selectedPost);
+    res.render("updatePost", selectedPost);
+  } else {
+    res.render("login");
+  }
+});
+
 router.get("/dashboard", async (req, res) => {
   if (req.session.logged_in) {
     const userPosts = await Post.findAll({
@@ -143,7 +180,7 @@ router.get("/logout", async (req, res) => {
     req.session.destroy();
     res.redirect("/home");
   } else {
-    res.status(404).end();
+    res.redirect("/login");
   }
 });
 
@@ -153,10 +190,7 @@ router.post("/signup", async (req, res) => {
     password: req.body.password,
   });
   newUser;
-  req.session.logged_in = true;
-  req.session.user = req.body.username;
-  req.session.userId = checkPW.id;
-  res.render("dashboard");
+  res.redirect("/login");
 });
 
 module.exports = router;

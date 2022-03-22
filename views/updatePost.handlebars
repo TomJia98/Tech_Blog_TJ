@@ -11,7 +11,6 @@
               <li class="nav-item">
                 <a class="nav-link" href="login">Login</a>
               </li>
-                </li>
               <li class="nav-item">
                 <a class="nav-link" href="logout">Logout</a>
               </li>
@@ -20,30 +19,12 @@
         </div>
       </nav>
 
-{{!-- add ability to update and delete posts --}}
+<form action="/updatepost{{id}}" method="POST">
+      <div>
+          <textarea id="title" name="title">{{title}}</textarea>
 
-<div>the dashboard logged in</div>
+        <textarea id="description" name="description">{{description}}</textarea>
 
-{{#each userPosts}}
-<div class="posts">
-<h3>{{title}}</h3>
-<p>uploaded on {{date_created}}</p>
-
-<form method="get" action="deletepost{{id}}">
-  <button type="submit" name="submit_param" value="submit_value" class="link-button">
-  delete
-  </button>
-</form>
-
-<form method="get" action="updatepost{{id}}">
-  <button type="submit" name="submit_param" value="submit_value" class="link-button">
-  update 
-  </button>
-</form>
-
-</div>
-{{/each}}
-
-
-<a href="newpost"> create post </a>
-
+      </div>
+      <input type="submit" value="update post">
+</form>      
