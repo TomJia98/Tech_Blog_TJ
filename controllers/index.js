@@ -1,15 +1,13 @@
 const router = require("express").Router();
-const bodyParser = require("body-parser");
-const app = require("express");
 const { currentDate } = require("../utils/helpers");
-const session = require("express-session");
 const { User, Post, Comment } = require("../models");
 
 router.get("/", (req, res) => {
   res.render("main");
-});
+}); //renders the main page
 
 router.get("/home", async (req, res) => {
+  //renders the homepage, which changes if your logged in
   isLogged = req.session.logged_in;
   const userPosts = await Post.findAll({
     attributes: { exclude: ["password"] },
@@ -26,14 +24,15 @@ router.get("/home", async (req, res) => {
 });
 
 router.get("/login", async (req, res) => {
-  res.render("login");
+  res.render("login"); //renders the login page
 });
 
 router.get("/signup", async (req, res) => {
-  res.render("signup");
+  res.render("signup"); //renders the signup page
 });
 
 router.get("/comment:id", async (req, res) => {
+  //renders the comment page
   if (req.session.logged_in) {
     let data = req.params.id;
 
@@ -58,11 +57,18 @@ router.get("/comment:id", async (req, res) => {
       where: { id: postId },
       raw: true,
     });
-    console.log(firstRes);
+    let areComments = true;
+    if ((await selectedPost[0]["comments.id"]) == null) {
+      areComments = false;
+    }
+
+    console.log(selectedPost[0]["comments.id"]);
+    console.log(areComments);
     res.render("add-comment", {
       userData,
       post: firstRes,
       selectedPost,
+      areComments,
     });
   } else {
     res.render("login");
@@ -70,6 +76,7 @@ router.get("/comment:id", async (req, res) => {
 });
 
 router.post("/newcomment:id", async (req, res) => {
+  //adds the comment to the table
   const newComment = await Comment.create({
     post_id: req.params.id,
     description: req.body.comment,
@@ -80,6 +87,7 @@ router.post("/newcomment:id", async (req, res) => {
 });
 
 router.get("/deletepost:id", async (req, res) => {
+  //deletes post
   if (req.session.logged_in) {
     //delete post, saves a js file being made
     const deletePost = await Post.destroy({
@@ -91,6 +99,7 @@ router.get("/deletepost:id", async (req, res) => {
 });
 
 router.post("/updatepost:id", async (req, res) => {
+  //updates post in the table
   if (req.session.logged_in) {
     const updatePost = await Post.update(
       { title: req.body.title, description: req.body.description },
@@ -104,6 +113,7 @@ router.post("/updatepost:id", async (req, res) => {
 });
 
 router.get("/updatepost:id", async (req, res) => {
+  //renders the selected post
   if (req.session.logged_in) {
     const selectedPost = await Post.findOne({
       where: { id: req.params.id },
@@ -117,6 +127,7 @@ router.get("/updatepost:id", async (req, res) => {
 });
 
 router.get("/dashboard", async (req, res) => {
+  //renders the dashboard for the user
   if (req.session.logged_in) {
     const userPosts = await Post.findAll({
       where: { user_id: req.session.userId },
@@ -130,6 +141,7 @@ router.get("/dashboard", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
+  //checks the login
   const checkPW = await User.findOne({
     where: { name: req.body.username },
   });
@@ -156,6 +168,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/newpost", async (req, res) => {
+  //renders the newpost page
   if (req.session.logged_in) {
     const date = currentDate();
     console.log(date);
@@ -166,6 +179,7 @@ router.get("/newpost", async (req, res) => {
 });
 
 router.post("/newpost", async (req, res) => {
+  //saves the newpost
   const newPost = await Post.create({
     title: req.body.title,
     description: req.body.description,
@@ -176,6 +190,7 @@ router.post("/newpost", async (req, res) => {
 });
 
 router.get("/logout", async (req, res) => {
+  //logs the user out
   if (req.session.logged_in) {
     req.session.destroy();
     res.redirect("/home");
@@ -185,6 +200,7 @@ router.get("/logout", async (req, res) => {
 });
 
 router.post("/signup", async (req, res) => {
+  //saves userdata to the table
   const newUser = await User.create({
     name: req.body.username,
     password: req.body.password,

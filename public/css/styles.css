@@ -1,0 +1,123 @@
+body {
+  background-color: red;
+  background-repeat: repeat;
+  background-image: linear-gradient(to bottom right, red, yellow);
+  background-size: cover;
+  height: 100%;
+}
+
+#main-heading {
+  display: inline-block;
+  border: 5px solid blue;
+  border-radius: 5px;
+  background-color: lightblue;
+  margin: 10px;
+  padding: 10px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+.comments {
+  background-color: rgb(132, 205, 230);
+  border: 2px solid blue;
+  border-radius: 5px;
+  display: block;
+  width: 30%;
+  margin: 10px;
+  padding: 10px;
+  box-shadow: 5px 10px;
+}
+.comments h4 {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  border-bottom: 2px solid black;
+}
+
+.posts {
+  background-color: lightblue;
+  border: 2px solid blue;
+  border-radius: 5px;
+  display: block;
+  width: 60%;
+  margin: 10px;
+  padding: 10px;
+  padding-bottom: 50px;
+}
+
+.signform {
+  margin: auto;
+  text-align: center;
+}
+
+.posts h2 {
+  border-bottom: 2px solid black;
+}
+.info {
+  font-size: 0.75em;
+}
+
+textarea {
+  margin: 15px;
+  background-color: rgb(214, 233, 240);
+  padding: 40px;
+}
+#comment {
+  margin: 15px;
+  background-color: rgb(214, 233, 240);
+  padding: 40px;
+}
+#create-new {
+  text-decoration: none;
+  background-color: rgb(136, 206, 230);
+  border: 2px solid blue;
+  padding: 10px;
+  margin: 10px;
+  box-shadow: 5px 7px;
+  color: black;
+}
+
+#create-new:hover {
+  text-decoration: none;
+  background-color: rgb(131, 196, 218);
+  box-shadow: 2px 5px;
+}
+
+.view-post {
+  text-decoration: none;
+  background-color: rgb(136, 206, 230);
+  border: 2px solid blue;
+  padding: 10px;
+  margin: 10px;
+  box-shadow: 5px 7px;
+  color: black;
+}
+
+.view-post:hover {
+  text-decoration: none;
+  background-color: rgb(131, 196, 218);
+  box-shadow: 2px 5px;
+}
+
+.button {
+  border-radius: 5px;
+  background-color: rgb(136, 206, 230);
+  border: 2px solid blue;
+  margin: 5px;
+}
+.button:hover {
+  background-color: rgb(114, 196, 223);
+}
+
+.signup-button {
+  display: inline-block;
+  text-decoration: none;
+  background-color: rgb(136, 206, 230);
+  border: 2px solid blue;
+  padding: 10px;
+  margin: 10px;
+  box-shadow: 5px 7px;
+  color: black;
+}
+.signup-button:hover {
+  text-decoration: none;
+  background-color: rgb(131, 196, 218);
+  box-shadow: 2px 5px;
+}

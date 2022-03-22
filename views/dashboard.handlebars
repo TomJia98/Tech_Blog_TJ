@@ -1,22 +1,18 @@
 
 
-{{!-- add ability to update and delete posts --}}
-
-<div>the dashboard logged in</div>
-
 {{#each userPosts}}
 <div class="posts">
-<h3>{{title}}</h3>
-<p>uploaded on {{date_created}}</p>
+<h2>{{title}}</h2>
+<p class="info">uploaded on {{date_created}}</p>
 
 <form method="get" action="deletepost{{id}}">
-  <button type="submit" name="submit_param" value="submit_value" class="link-button">
+  <button class="button" type="submit" name="submit_param" value="submit_value" class="link-button">
   delete
   </button>
 </form>
 
 <form method="get" action="updatepost{{id}}">
-  <button type="submit" name="submit_param" value="submit_value" class="link-button">
+  <button  class="button" type="submit" name="submit_param" value="submit_value" class="link-button">
   update 
   </button>
 </form>
@@ -25,5 +21,5 @@
 {{/each}}
 
 
-<a href="newpost"> create post </a>
+<a id="create-new" href="newpost"> create post </a>
 

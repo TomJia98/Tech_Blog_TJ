@@ -2,22 +2,22 @@
 
 
 <div class="posts" data-id="{{post.id}}">
-<h3>{{post.title}}</h3>
-<p>uploaded by {{userData.name}} on {{post.date_created}}</p>
+<h2>{{post.title}}</h2>
+<p class="info">uploaded by <strong>{{userData.name}}</strong> on {{post.date_created}}</p>
 <div>
 <p>{{post.description}}</p>
 </div>
 
-
+{{#if areComments}}
 {{#each selectedPost}}
-<div>
-    <h2>{{'comments.user.name'}}</h2>
+<div class="comments">
+    <h4>{{'comments.user.name'}}</h4>
     <p>{{'comments.description'}}</p>
 </div>
 {{/each}}
+{{/if}}
 
-
-<form action="/newcomment{{post.id}}" method="POST">
+<form action="/newcomment{{post.id}}" method="POST" >
   <textarea type="text" id="comment" name="comment">add your comment here</textarea>
   <input type="submit" value="submit">
 </form>

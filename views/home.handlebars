@@ -1,23 +1,18 @@
 
 
 
-{{#if isLogged}}
-<div>the home logged in</div>
-{{/if}}
-
 {{#each userPosts}}
 <div class="posts" data-id="{{id}}">
 <h3>{{title}}</h3>
-<p>uploaded by {{'user.name'}} on {{date_created}}</p>
+<p class="info">uploaded by <strong>{{'user.name'}}</strong> on {{date_created}}</p>
 <div>
 <p>{{description}}</p>
 </div>
 
-<a href="comment{{id}}">view post</a>
+<a class="view-post" href="comment{{id}}">view post</a>
 
 </div>
 {{/each}}
 
 
 
-<p>asd</p>
